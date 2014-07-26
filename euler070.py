@@ -123,4 +123,26 @@ def e74():
             count += 1
     return count
 
-lib.run(e74)
+
+def e75():
+    l_bound = 1500000
+    l_dict = {}
+
+    # for every natural number m, n that n < m
+    # primitive pythagorean triple a, b, c = mm - nn, 2mn, mm + nn
+    for n in xrange(1, int(l_bound ** 0.5 / 2) + 1):  # m > n & a + b + c <= l ==> n < sqrt(l)/2 < m
+        for m in xrange(n + 1, l_bound):
+            l = 2 * m * (m + n)
+            if l > l_bound:
+                break
+            if lib.gcd(m, n) != 1 or (m - n) % 2 != 1:
+                continue
+            l0 = l
+            while l0 <= l_bound:
+                #print l0/l*(m*m - n*n), l0/l*2*m*n, l0/l*(m*m + n*n), l0
+                l_dict[l0] = l0 not in l_dict
+                l0 += l
+    return len([b for b in l_dict.values() if b])
+
+
+lib.run(e75)
